@@ -8,7 +8,7 @@ import EmojiData from './emoji_data.json';
 
 const backgroundImageFnDefault = () => `${assetHost}/emoji/sheet_15_1.png`;
 
-const Emoji = ({
+export const Emoji = ({
   set = 'twitter',
   sheetSize = 32,
   sheetColumns = 62,
@@ -29,18 +29,17 @@ const Emoji = ({
   );
 };
 
-const Picker = ({
-  set = 'twitter',
+export const Picker = ({
   sheetSize = 32,
   sheetColumns = 62,
   sheetRows = 62,
   backgroundImageFn = backgroundImageFnDefault,
   ...props
-}: PickerProps) => {
+}: Omit<PickerProps, 'set'>) => {
   return (
     <PickerRaw
       data={EmojiData}
-      set={set}
+      set='twitter'
       sheetSize={sheetSize}
       sheetColumns={sheetColumns}
       sheetRows={sheetRows}
@@ -49,5 +48,3 @@ const Picker = ({
     />
   );
 };
-
-export { Picker, Emoji };
