@@ -11,10 +11,10 @@ import type {
 import { unicodeToFilename } from './unicode_to_filename';
 
 type UnicodeMapping = Record<
-  FilenameData[number][0],
+  string,
   {
-    shortCode: ShortCodesToEmojiDataKey;
-    filename: FilenameData[number][number];
+    shortCode?: ShortCodesToEmojiDataKey;
+    filename: string;
   }
 >;
 
@@ -43,7 +43,7 @@ function processEmojiMapData(
 }
 
 Object.keys(shortCodesToEmojiData).forEach(
-  (shortCode: ShortCodesToEmojiDataKey) => {
+  (shortCode?: ShortCodesToEmojiDataKey) => {
     if (shortCode === undefined) return;
 
     const emojiData = shortCodesToEmojiData[shortCode];

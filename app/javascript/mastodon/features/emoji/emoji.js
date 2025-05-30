@@ -27,6 +27,11 @@ const emojiFilename = (filename, colorScheme) => {
   return borderedEmoji.includes(filename) ? (filename + '_border') : filename;
 };
 
+/**
+ *
+ * @param {Node} node
+ * @param {Record<string,any>} customEmojis
+ */
 const emojifyTextNode = (node, customEmojis) => {
   const VS15 = 0xFE0E;
   const VS16 = 0xFE0F;

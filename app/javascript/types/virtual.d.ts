@@ -1,5 +1,5 @@
 declare module 'virtual:mastodon-emoji-compressed' {
-  import type { BaseEmoji, EmojiData, NimbleEmojiIndex } from 'emoji-mart';
+  import type { BaseEmoji } from 'emoji-mart';
   import type { Category, Data, Emoji } from 'emoji-mart/dist-es/utils/data';
   /*
    * The 'search' property, although not defined in the [`Emoji`]{@link node_modules/@types/emoji-mart/dist-es/utils/data.d.ts#Emoji} type,
@@ -21,10 +21,7 @@ declare module 'virtual:mastodon-emoji-compressed' {
     filename: Filename,
     unicodeFilename?: UnicodeFilename,
   ][];
-  export type ShortCodesToEmojiDataKey =
-    | EmojiData['id']
-    | BaseEmoji['native']
-    | keyof NimbleEmojiIndex['emojis'];
+  export type ShortCodesToEmojiDataKey = string;
 
   type SearchData = [
     BaseEmoji['native'],
