@@ -76,7 +76,7 @@ export async function emojibaseToEmojiMart(
       hexcode: emoji.unified,
       x: emoji.sheet_x,
       y: emoji.sheet_y,
-      labels: emojibaseEmoji?.shortcodes,
+      labels: emojibaseEmoji?.tags,
       skins,
     });
   }

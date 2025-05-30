@@ -8,7 +8,7 @@ import { SUPPORTED_LOCALES } from 'emojibase';
 import { emojibaseToEmojiMart, emojibaseToUnicodeMapping } from './data';
 
 const projectRoot = process.cwd();
-const emojiPath = path.resolve(projectRoot, 'public/emoji');
+const emojiLocalePath = path.resolve(projectRoot, 'public/emoji/locales');
 
 async function calculateLocales() {
   // Get a list of all locales we support.
@@ -30,9 +30,7 @@ async function calculateLocales() {
 }
 
 async function generateAllEmojiJsonFiles() {
-  const emojiLocalePath = path.resolve(emojiPath, 'locales');
   const emojiLocales = await calculateLocales();
-  await fs.mkdir(emojiLocalePath, { recursive: true }); // Ensure the locales directory exists
   await Promise.all(
     emojiLocales.map((locale) => writeEmojiLocaleJson(locale, emojiLocalePath)),
   );
@@ -48,20 +46,26 @@ async function writeEmojiLocaleJson(locale: Locale, dirPath: string) {
 }
 
 async function generateEmojiSheetMappingJson() {
-  const emojiMetaPath = path.resolve(emojiPath, 'meta');
-  await fs.mkdir(emojiMetaPath, { recursive: true }); // Ensure the meta directory exists
   const locales = await calculateLocales();
   await Promise.all(
-    locales.map((locale) => writeEmojiMappingJson(locale, emojiMetaPath)),
+    locales.map((locale) => writeEmojiMappingJson(locale, emojiLocalePath)),
   );
 }
 
 async function writeEmojiMappingJson(locale: Locale, dirPath: string) {
   const mapping = await emojibaseToEmojiMart(locale);
-  const filePath = path.join(dirPath, `${locale}.json`);
+  const filePath = path.join(dirPath, `${locale}.mapping.json`);
   await fs.writeFile(filePath, JSON.stringify(mapping, null, 2), 'utf-8');
 }
 
-Promise.all([generateAllEmojiJsonFiles(), generateEmojiSheetMappingJson()])
+async function main() {
+  await fs.mkdir(emojiLocalePath, { recursive: true }); // Ensure the locales directory exists
+  return Promise.all([
+    generateAllEmojiJsonFiles(),
+    generateEmojiSheetMappingJson(),
+  ]);
+}
+
+main()
   .then(() => process.exit())
   .catch(console.error);
