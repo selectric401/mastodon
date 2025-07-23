@@ -40,7 +40,7 @@ class ContentSecurityPolicy
   end
 
   def cdn_host_value
-    s3_alias_host || s3_cloudfront_host || azure_alias_host || s3_hostname_host || swift_object_url
+    s3_alias_host || s3_cloudfront_host || azure_alias_host || s3_hostname_host || swift_object_url || extra_data_hosts
   end
 
   def paperclip_root_url
@@ -72,6 +72,10 @@ class ContentSecurityPolicy
     host_to_url ENV.fetch('AZURE_ALIAS_HOST', nil)
   end
 
+  def extra_data_hosts
+    host_to_url ENV.fetch('EXTRA_DATA_HOSTS', nil)
+  end
+  
   def s3_hostname_host
     host_to_url ENV.fetch('S3_HOSTNAME', nil)
   end

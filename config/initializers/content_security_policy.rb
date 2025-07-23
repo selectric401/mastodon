@@ -17,8 +17,8 @@ Rails.application.config.content_security_policy do |p|
   p.default_src     :none
   p.frame_ancestors :none
   p.font_src        :self, assets_host
-  p.img_src         :self, :data, :blob, *media_hosts
-  p.media_src       :self, :data, *media_hosts
+  p.img_src         :self, :data, :https, :blob, *media_hosts
+  p.media_src       :self, :data, :https, *media_hosts
   p.manifest_src    :self, assets_host
 
   if policy.sso_host.present?
